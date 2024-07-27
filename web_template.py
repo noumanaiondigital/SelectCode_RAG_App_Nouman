@@ -24,3 +24,20 @@ css = '''
   color: #fff;
 }
 '''
+bot_template = '''
+<div class="chat-message bot">
+    <div class="avatar">
+        <img src="images/bot_icon.jpg" style="max-height: 80px; max-width: 80px; border="20" >
+    </div>
+    <div class="message">{{MSG}}</div>
+</div>
+'''
+
+user_template = '''
+<div class="chat-message user">
+    <div class="avatar">
+        <img src="images/human_icon.jpg" style="max-height: 100px; max-width: 80px; border="20" >
+    </div>    
+    <div class="message">{{MSG}}</div>
+</div>
+'''
