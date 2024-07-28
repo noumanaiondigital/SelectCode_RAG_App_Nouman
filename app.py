@@ -1,103 +1,26 @@
 import streamlit as st
-from langchain.text_splitter import CharacterTextSplitter
-
-
-from langchain.text_splitter import CharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain.memory import ConversationBufferMemory
-from langchain_community.retrievers import BM25Retriever, EnsembleRetriever
-from langchain.chains import ConversationalRetrievalChain
-from langchain_community.chat_models import ChatOpenAI
-
 from web_template import css, user_template, bot_template
-
+from rag_utils import get_chunks, get_embeddings_and_retrievers
+from preprocess_files import get_md_content
+from llm_helpers import start_conversation
+from rag_test import run_rag_test
 import os
 
 import configparser
 cfg = configparser.ConfigParser()
+import warnings
+warnings.filterwarnings("ignore")
+
+
 cfg.read('env.cfg')
 openai_key = cfg.get('KEYS', 'API_KEY', raw='')
+flag_run_rag_tests = cfg.get('OTHERS', 'RUN_RAG_TEST', raw='')
 
 os.environ["OPENAI_API_KEY"] = openai_key
-
-def get_md_content(documents):
-    raw_text = ""
-
-    for document in documents:
-        content = document.read().decode('utf-8')
-        raw_text += content + "\n"
-
-    return raw_text
-
-
-def get_chunks(text):
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=300,
-        length_function=len
-    )
-    text_chunks = text_splitter.split_text(text)
-    return text_chunks
+os.environ["PYDEVD_WARN_EVALUATION_TIMEOUT"] = "30"
 
 
 
-# def get_embeddings(chunks):
-#     embeddings = OpenAIEmbeddings()
-#     vector_storage = FAISS.from_texts(texts=chunks, embedding=embeddings)
-
-#     return vector_storage
-
-
-def get_embeddings_and_retrievers(chunks):
-    # Create embeddings
-    embeddings = OpenAIEmbeddings()
-
-    # Initialize FAISS vector store
-    faiss_vectorstore = FAISS.from_texts(texts=chunks, embedding=embeddings)
-    faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k": 5})
-
-    # Initialize BM25 retriever
-    bm25_retriever = BM25Retriever.from_texts(texts=chunks, k=5)
-
-    # Initialize ensemble retriever
-    ensemble_retriever = EnsembleRetriever(retrievers=[bm25_retriever, faiss_retriever], weights=[0.5, 0.5])
-
-    return ensemble_retriever
-
-
-# def start_conversation(vector_embeddings):
-#     llm = ChatOpenAI(model="gpt-4o-mini",
-#                      temperature=0.2,
-#                      request_timeout=20)
-#     memory = ConversationBufferMemory(
-#         memory_key='chat_history',
-#         return_messages=True
-#     )
-#     conversation = ConversationalRetrievalChain.from_llm(
-#         llm=llm,
-#         retriever=vector_embeddings.as_retriever(),
-#         memory=memory
-#     )
-
-#     return conversation
-
-
-def start_conversation(ensemble_retriever):
-    llm = ChatOpenAI(model="gpt-4o-mini",
-                     temperature=0.2,
-                     request_timeout=20)
-    memory = ConversationBufferMemory(
-        memory_key='chat_history',
-        return_messages=True
-    )
-    conversation = ConversationalRetrievalChain.from_llm(
-        llm=llm,
-        retriever=ensemble_retriever,
-        memory=memory
-    )
-    return conversation
 
 def process_query(query_text):
     response = st.session_state.conversation({'question': query_text})
@@ -108,7 +31,6 @@ def process_query(query_text):
             st.write(user_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
         else:
             st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
-
 
 
 def main():
@@ -124,9 +46,6 @@ def main():
 
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
-
-
-
 
     with st.sidebar:
         st.subheader("Markdown documents")
@@ -147,7 +66,13 @@ def main():
                 # create conversation
                 st.session_state.conversation = start_conversation(ensemble_retriever)
 
-
-
 if __name__ == "__main__":
     main()
+
+
+# print("Testing started")
+# if flag_run_rag_tests=="True":
+#     file_path = cfg.get('OTHERS', 'RAG_FILE_PATH', raw='')
+#     eval_questions_path = cfg.get('OTHERS', 'QUESTIONS_FILE_PATH', raw='')
+#     run_rag_test(file_path, eval_questions_path)
+#     print("Testing completed, files saved.")

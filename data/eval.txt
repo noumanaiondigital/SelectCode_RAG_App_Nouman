@@ -1,0 +1,10 @@
+What are the basic commands needed to get started with Git?
+How do you initialize a Git repository in an existing directory?
+What are the two main ways to obtain a Git repository?
+How can you configure Git to ignore certain files and file patterns?
+What is the purpose of the .git directory created by the git init command?
+How do you begin and stop tracking files in a Git repository?
+What steps should you take to undo mistakes quickly and easily in Git?
+How can you view the history of your project and changes between commits in Git?
+What are the commands for pushing and pulling from remote repositories in Git?
+What is the significance of staging files before committing changes in Git?
