@@ -27,7 +27,7 @@ css = '''
 bot_template = '''
 <div class="chat-message bot">
     <div class="avatar">
-        <img src="images/bot_icon.jpg" style="max-height: 80px; max-width: 80px; border="20" >
+        <img src="https://static.vecteezy.com/system/resources/previews/005/192/268/original/chatbot-notification-color-icon-chat-bot-face-with-exclamation-mark-important-message-artificial-conversational-entity-virtual-assistant-announcement-isolated-illustration-vector.jpg" style="max-height: 80px; max-width: 80px; border="20" >
     </div>
     <div class="message">{{MSG}}</div>
 </div>
@@ -36,7 +36,7 @@ bot_template = '''
 user_template = '''
 <div class="chat-message user">
     <div class="avatar">
-        <img src="images/human_icon.jpg" style="max-height: 100px; max-width: 80px; border="20" >
+        <img src="https://static.vecteezy.com/system/resources/previews/015/890/239/non_2x/humanoid-icon-color-outline-vector.jpg" style="max-height: 100px; max-width: 80px; border="20" >
     </div>    
     <div class="message">{{MSG}}</div>
 </div>
