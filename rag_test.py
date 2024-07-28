@@ -20,14 +20,6 @@ def test_retrievers(ensemble_retriever, questions):
     """
     ensemble_context = Select.RecordCalls.invoke.rets[:].page_content
     provider = fOpenAI(model_engine='gpt-4o-mini')
-
-    # Define feedback metrics
-    f_groundedness = (
-        Feedback(provider.groundedness_measure_with_cot_reasons, name="Groundedness")
-        .on(ensemble_context)
-        .on_output()
-        .aggregate(np.mean)
-    )
     
     # Answer relevance feedback
     f_qa_relevance = Feedback(
@@ -37,7 +29,7 @@ def test_retrievers(ensemble_retriever, questions):
 
     # Context relevance feedback
     f_qs_relevance = (
-        Feedback(provider.qs_relevance_with_cot_reasons, name="Context Relevance")
+        Feedback(provider.context_relevance_with_cot_reasons, name="Context Relevance")
         .on_input()
         .on(ensemble_context)
         .aggregate(np.mean)

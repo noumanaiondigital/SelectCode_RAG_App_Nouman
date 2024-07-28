@@ -58,7 +58,6 @@ def start_conversation(ensemble_retriever: EnsembleRetriever) -> ConversationalR
     return conversation
 
 
-
 def process_query(query_text: str) -> None:
     """
     Process the user's query and update the chat history.
@@ -78,6 +77,7 @@ def process_query(query_text: str) -> None:
         else:
             st.write(bot_template.replace("{{MSG}}", message.content), unsafe_allow_html=True)
 
+
 def main() -> None:
     """
     Main function to run the Streamlit app.
@@ -92,8 +92,6 @@ def main() -> None:
     #     eval_questions_path = cfg.get('OTHERS', 'QUESTIONS_FILE_PATH', raw='')
     #     run_rag_test(file_path, eval_questions_path)
     #     print("Testing completed, files saved.")
-
-
 
     st.set_page_config(page_title="Chat with PDFs", page_icon=":books:", layout="wide")
     st.write(css, unsafe_allow_html=True)
@@ -124,6 +122,7 @@ def main() -> None:
                 ensemble_retriever = get_embeddings_and_retrievers(text_chunks)
                 # Create conversation
                 st.session_state.conversation = start_conversation(ensemble_retriever)
+
 
 if __name__ == "__main__":
     main()
