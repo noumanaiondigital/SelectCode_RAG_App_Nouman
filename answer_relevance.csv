@@ -1,0 +1,211 @@
+prompt,response,ret
+What are the basic commands needed to get started with Git?,"page_content='## Git Basics
+
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
+
+## Getting A Git Repository
+
+You typically obtain a Git repository in one of two ways:
+1. You can take a local directory that is currently not under version control, and turn it into a Git repository, or 2. You can *clone* an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine, ready for work.
+
+## Initializing A Repository In An Existing Directory
+
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this, it looks a little different depending on which system you're running: for Linux:
+$ cd /home/user/my_project for macOS:
+$ cd /Users/user/my_project for Windows:
+$ cd C:/Users/user/my_project and type:
+$ git init This creates a new subdirectory named .git that contains all of your necessary repository files - a Git repository skeleton. At this point, nothing in your project is tracked yet. See Git Internals for 26 more information about exactly what files are contained in the .git directory you just created.
+
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a git commit:
+$ git add *.c
+
+![32_image_0.png](32_image_0.png) $ git add LICENSE $ git commit -m 'Initial project version' We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.'",1.0
+How do you initialize a Git repository in an existing directory?,"page_content='## Git Basics
+
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
+
+## Getting A Git Repository
+
+You typically obtain a Git repository in one of two ways:
+1. You can take a local directory that is currently not under version control, and turn it into a Git repository, or 2. You can *clone* an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine, ready for work.
+
+## Initializing A Repository In An Existing Directory
+
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this, it looks a little different depending on which system you're running: for Linux:
+$ cd /home/user/my_project for macOS:
+$ cd /Users/user/my_project for Windows:
+$ cd C:/Users/user/my_project and type:
+$ git init This creates a new subdirectory named .git that contains all of your necessary repository files - a Git repository skeleton. At this point, nothing in your project is tracked yet. See Git Internals for 26 more information about exactly what files are contained in the .git directory you just created.
+
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a git commit:
+$ git add *.c
+
+![32_image_0.png](32_image_0.png) $ git add LICENSE $ git commit -m 'Initial project version' We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.'",1.0
+What are the two main ways to obtain a Git repository?,"page_content='## Git Basics
+
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
+
+## Getting A Git Repository
+
+You typically obtain a Git repository in one of two ways:
+1. You can take a local directory that is currently not under version control, and turn it into a Git repository, or 2. You can *clone* an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine, ready for work.
+
+## Initializing A Repository In An Existing Directory
+
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this, it looks a little different depending on which system you're running: for Linux:
+$ cd /home/user/my_project for macOS:
+$ cd /Users/user/my_project for Windows:
+$ cd C:/Users/user/my_project and type:
+$ git init This creates a new subdirectory named .git that contains all of your necessary repository files - a Git repository skeleton. At this point, nothing in your project is tracked yet. See Git Internals for 26 more information about exactly what files are contained in the .git directory you just created.
+
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a git commit:
+$ git add *.c
+
+![32_image_0.png](32_image_0.png) $ git add LICENSE $ git commit -m 'Initial project version' We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.'",1.0
+How can you configure Git to ignore certain files and file patterns?,"page_content='Ignoring Files
+
+Often, you'll have a class of files that you don't want Git to automatically add or even show you as being untracked. These are generally automatically generated files such as log files or files produced by your build system. In such cases, you can create a file listing patterns to match them named .gitignore. Here is an example .gitignore file:
+$ cat .gitignore *.[oa] *~
+The first line tells Git to ignore any files ending in "".o"" or "".a"" - object and archive files that may be the product of building your code. The second line tells Git to ignore all files whose names end with a tilde (~), which is used by many text editors such as Emacs to mark temporary files. You may also include a log, tmp, or pid directory; automatically generated documentation; and so on. Setting up a
+.gitignore file for your new repository before you get going is generally a good idea so you don't accidentally commit files that you really don't want in your Git repository.
+
+The rules for the patterns you can put in the .gitignore file are as follows:
+- Blank lines or lines starting with \# are ignored.
+
+- Standard glob patterns work, and will be applied recursively throughout the entire working tree.
+
+- You can start patterns with a forward slash (/) to avoid recursivity.
+
+- You can end patterns with a forward slash (/) to specify a directory.
+
+- You can negate a pattern by starting it with an exclamation point (!).
+
+Glob patterns are like simplified regular expressions that shells use. An asterisk (*) matches zero or more characters; [abc] matches any character inside the brackets (in this case a, b, or c); a question mark (?) matches a single character; and brackets enclosing characters separated by a hyphen ([09]) matches any character between them (in this case 0 through 9). You can also use two asterisks to match nested directories; a/**/z would match a/z, a/b/z, a/b/c/z, and so on.
+
+32
+\# ignore all .a files *.a \# but do track lib.a, even though you're ignoring .a files above !lib.a \# only ignore the TODO file in the current directory, not subdir/TODO /TODO \# ignore all files in any directory named build build/
+\# ignore doc/notes.txt, but not doc/server/arch.txt doc/*.txt \# ignore all .pdf files in the doc/ directory and any of its subdirectories doc/**/*.pdf GitHub maintains a fairly comprehensive list of good .gitignore file examples for dozens of projects and languages at https://github.com/github/gitignore if you want a starting point for your project.
+
+In the simple case, a repository might have a single .gitignore file in its root directory, which applies recursively to the entire repository. However, it is also possible to have additional .gitignore files in subdirectories. The rules in these nested .gitignore files apply only to the files under the directory where they are located. The Linux kernel source repository has 206 .gitignore files.
+
+![38_image_0.png](38_image_0.png)
+
+It is beyond the scope of this book to get into the details of multiple .gitignore files; see man gitignore for the details.'",1.0
+What is the purpose of the .git directory created by the git init command?,"page_content='## Git Basics
+
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
+
+## Getting A Git Repository
+
+You typically obtain a Git repository in one of two ways:
+1. You can take a local directory that is currently not under version control, and turn it into a Git repository, or 2. You can *clone* an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine, ready for work.
+
+## Initializing A Repository In An Existing Directory
+
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this, it looks a little different depending on which system you're running: for Linux:
+$ cd /home/user/my_project for macOS:
+$ cd /Users/user/my_project for Windows:
+$ cd C:/Users/user/my_project and type:
+$ git init This creates a new subdirectory named .git that contains all of your necessary repository files - a Git repository skeleton. At this point, nothing in your project is tracked yet. See Git Internals for 26 more information about exactly what files are contained in the .git directory you just created.
+
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a git commit:
+$ git add *.c
+
+![32_image_0.png](32_image_0.png) $ git add LICENSE $ git commit -m 'Initial project version' We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.'",0.6
+How do you begin and stop tracking files in a Git repository?,"page_content='## Git Basics
+
+If you can read only one chapter to get going with Git, this is it. This chapter covers every basic command you need to do the vast majority of the things you'll eventually spend your time doing with Git. By the end of the chapter, you should be able to configure and initialize a repository, begin and stop tracking files, and stage and commit changes. We'll also show you how to set up Git to ignore certain files and file patterns, how to undo mistakes quickly and easily, how to browse the history of your project and view changes between commits, and how to push and pull from remote repositories.
+
+## Getting A Git Repository
+
+You typically obtain a Git repository in one of two ways:
+1. You can take a local directory that is currently not under version control, and turn it into a Git repository, or 2. You can *clone* an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine, ready for work.
+
+## Initializing A Repository In An Existing Directory
+
+If you have a project directory that is currently not under version control and you want to start controlling it with Git, you first need to go to that project's directory. If you've never done this, it looks a little different depending on which system you're running: for Linux:
+$ cd /home/user/my_project for macOS:
+$ cd /Users/user/my_project for Windows:
+$ cd C:/Users/user/my_project and type:
+$ git init This creates a new subdirectory named .git that contains all of your necessary repository files - a Git repository skeleton. At this point, nothing in your project is tracked yet. See Git Internals for 26 more information about exactly what files are contained in the .git directory you just created.
+
+If you want to start version-controlling existing files (as opposed to an empty directory), you should probably begin tracking those files and do an initial commit. You can accomplish that with a few git add commands that specify the files you want to track, followed by a git commit:
+$ git add *.c
+
+![32_image_0.png](32_image_0.png) $ git add LICENSE $ git commit -m 'Initial project version' We'll go over what these commands do in just a minute. At this point, you have a Git repository with tracked files and an initial commit.'",0.9
+What steps should you take to undo mistakes quickly and easily in Git?,"page_content='Undoing Things With Git Restore
+
+Git version 2.23.0 introduced a new command: git restore. It's basically an alternative to git reset which we just covered. From Git version 2.23.0 onwards, Git will use git restore instead of git reset for many undo operations.
+
+Let's retrace our steps, and undo things with git restore instead of git reset.
+
+## Unstaging A Staged File With Git Restore
+
+The next two sections demonstrate how to work with your staging area and working directory changes with git restore. The nice part is that the command you use to determine the state of those two areas also reminds you how to undo changes to them. For example, let's say you've changed two files and want to commit them as two separate changes, but you accidentally type git add * and stage them both. How can you unstage one of the two? The git status command reminds you:
+$ git add * $ git status On branch master Changes to be committed: (use ""git restore --staged <file>..."" to unstage) modified: CONTRIBUTING.md renamed: README.md -> README
+Right below the ""Changes to be committed"" text, it says use git restore --staged <file>… to unstage. So, let's use that advice to unstage the CONTRIBUTING.md file:
+$ git restore --staged CONTRIBUTING.md $ git status On branch master Changes to be committed: (use ""git restore --staged <file>..."" to unstage) renamed: README.md -> README Changes not staged for commit: (use ""git add <file>..."" to update what will be committed) (use ""git restore <file>..."" to discard changes in working directory)
+The CONTRIBUTING.md file is modified but once again unstaged.
+
+## Unmodifying A Modified File With Git Restore
+
+What if you realize that you don't want to keep your changes to the CONTRIBUTING.md file? How can you easily unmodify it - revert it back to what it looked like when you last committed (or initially cloned, or however you got it into your working directory)? Luckily, git status tells you how to do that, too. In the last example output, the unstaged area looks like this:
+Changes not staged for commit: (use ""git add <file>..."" to update what will be committed) (use ""git restore <file>..."" to discard changes in working directory) modified: CONTRIBUTING.md It tells you pretty explicitly how to discard the changes you've made. Let's do what it says:
+$ git restore CONTRIBUTING.md $ git status On branch master Changes to be committed: (use ""git restore --staged <file>..."" to unstage) renamed: README.md -> README
+
+![55_image_0.png](55_image_0.png)
+
+It's important to understand that git restore <file> is a dangerous command. Any local changes you made to that file are gone - Git just replaced that file with the last staged or committed version. Don't ever use this command unless you absolutely know that you don't want those unsaved local changes.'",1.0
+How can you view the history of your project and changes between commits in Git?,"page_content='Rebase Vs. Merge
+
+Now that you've seen rebasing and merging in action, you may be wondering which one is better. Before we can answer this, let's step back a bit and talk about what history means. One point of view on this is that your repository's commit history is a record of what actually happened. It's a historical document, valuable in its own right, and shouldn't be tampered with. From this angle, changing the commit history is almost blasphemous; you're *lying* about what actually transpired. So what if there was a messy series of merge commits? That's how it happened, and the repository should preserve that for posterity. The opposing point of view is that the commit history is the **story of how your project was made.** You wouldn't publish the first draft of a book, so why show your messy work? When you're working on a project, you may need a record of all your missteps and dead-end paths, but when it's time to show your work to the world, you may want to tell a more coherent story of how to get from A to B. People in this camp use tools like rebase and filter-branch to rewrite their commits before they're merged into the mainline branch. They use tools like rebase and filter-branch, to tell the story in the way that's best for future readers. Now, to the question of whether merging or rebasing is better: hopefully you'll see that it's not that simple. Git is a powerful tool, and allows you to do many things to and with your history, but every team and every project is different. Now that you know how both of these things work, it's up to you to decide which one is best for your particular situation. You can get the best of both worlds: rebase local changes before pushing to clean up your work, but never rebase anything that you've pushed somewhere.
+
+## Summary
+
+We've covered basic branching and merging in Git. You should feel comfortable creating and switching to new branches, switching between branches and merging local branches together. You should also be able to share your branches by pushing them to a shared server, working with others on shared branches and rebasing your branches before they are shared. Next, we'll cover what you'll need to run your own Git repository-hosting server.'",0.2
+What are the commands for pushing and pulling from remote repositories in Git?,"page_content='Pulling
+
+While the git fetch command will fetch all the changes on the server that you don't have yet, it will not modify your working directory at all. It will simply get the data for you and let you merge it yourself. However, there is a command called git pull which is essentially a git fetch immediately followed by a git merge in most cases. If you have a tracking branch set up as demonstrated in the last section, either by explicitly setting it or by having it created for you by the clone or checkout commands, git pull will look up what server and branch your current branch is tracking, fetch from that server and then try to merge in that remote branch.
+
+Generally it's better to simply use the fetch and merge commands explicitly as the magic of git pull can often be confusing.
+
+## Deleting Remote Branches
+
+Suppose you're done with a remote branch - say you and your collaborators are finished with a feature and have merged it into your remote's master branch (or whatever branch your stable codeline is in). You can delete a remote branch using the --delete option to git push. If you want to delete your serverfix branch from the server, you run the following:
+$ git push origin --delete serverfix To https://github.com/schacon/simplegit - [deleted] serverfix Basically all this does is to remove the pointer from the server. The Git server will generally keep the data there for a while until a garbage collection runs, so if it was accidentally deleted, it's often easy to recover.
+
+## Rebasing
+
+In Git, there are two main ways to integrate changes from one branch into another: the merge and the rebase. In this section you'll learn what rebasing is, how to do it, why it's a pretty amazing tool, and in what cases you won't want to use it.'",0.4
+What is the significance of staging files before committing changes in Git?,"page_content='Skipping The Staging Area
+
+Although it can be amazingly useful for crafting commits exactly how you want them, the staging area is sometimes a bit more complex than you need in your workflow. If you want to skip the staging area, Git provides a simple shortcut. Adding the -a option to the git commit command makes Git automatically stage every file that is already tracked before doing the commit, letting you skip the git add part:
+$ git status On branch master Your branch is up-to-date with 'origin/master'. Changes not staged for commit: (use ""git add <file>..."" to update what will be committed) (use ""git checkout -- <file>..."" to discard changes in working directory) modified: CONTRIBUTING.md no changes added to commit (use ""git add"" and/or ""git commit -a"") $ git commit -a -m 'Add new benchmarks' [master 83e38c7] Add new benchmarks Notice how you don't have to run git add on the CONTRIBUTING.md file in this case before you commit.
+
+That's because the -a flag includes all changed files. This is convenient, but be careful; sometimes this flag will cause you to include unwanted changes.
+
+## Removing Files
+
+To remove a file from Git, you have to remove it from your tracked files (more accurately, remove it from your staging area) and then commit. The git rm command does that, and also removes the file from your working directory so you don't see it as an untracked file the next time around. If you simply remove the file from your working directory, it shows up under the ""Changes not staged for commit"" (that is, *unstaged*) area of your git status output:
+$ rm PROJECTS.md
+
+![43_image_0.png](43_image_0.png) $ git status On branch master Your branch is up-to-date with 'origin/master'. Changes not staged for commit: (use ""git add/rm <file>..."" to update what will be committed) (use ""git checkout -- <file>..."" to discard changes in working directory) deleted: PROJECTS.md
+
+![43_image_1.png](43_image_1.png) no changes added to commit (use ""git add"" and/or ""git commit -a"")
+Then, if you run git rm, it stages the file's removal:
+$ git rm PROJECTS.md rm 'PROJECTS.md' $ git status On branch master Your branch is up-to-date with 'origin/master'. Changes to be committed: (use ""git reset HEAD <file>..."" to unstage) deleted: PROJECTS.md The next time you commit, the file will be gone and no longer tracked. If you modified the file or had already added it to the staging area, you must force the removal with the -f option. This is a safety feature to prevent accidental removal of data that hasn't yet been recorded in a snapshot and that can't be recovered from Git. Another useful thing you may want to do is to keep the file in your working tree but remove it from your staging area. In other words, you may want to keep the file on your hard drive but not have Git track it anymore. This is particularly useful if you forgot to add something to your .gitignore 38 file and accidentally staged it, like a large log file or a bunch of .a compiled files. To do this, use the --cached option:
+$ git rm --cached README
+You can pass files, directories, and file-glob patterns to the git rm command. That means you can do things such as:
+$ git rm log/\*.log Note the backslash (\) in front of the *. This is necessary because Git does its own filename expansion in addition to your shell's filename expansion. This command removes all files that have the .log extension in the log/ directory. Or, you can do something like this:
+$ git rm \*~
+This command removes all files whose names end with a ~.'",0.2
