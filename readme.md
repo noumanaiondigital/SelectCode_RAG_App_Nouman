@@ -103,11 +103,4 @@ For production-ready chatbots, consider using frameworks like FastAPI to develop
 
 4. **Deployment**:
    - Use Docker and Kubernetes for containerization and orchestration.
-
-## Sample Chat Image
-
-Below is an example of a conversation with the chatbot. (Add your image here)
-
-![Sample Chat](path_to_your_image.png)
-
 By following this guide, you'll be able to set up and run a chatbot that leverages RAG to provide contextually relevant responses. Adjustments can be made based on the specific requirements of your application and deployment environment.
